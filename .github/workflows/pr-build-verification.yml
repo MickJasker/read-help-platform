@@ -21,7 +21,7 @@ jobs:
         run: yarn lint
         working-directory: client
       - name: Run test suite
-        run: yarn test
+        run: yarn test:unit
         working-directory: client
       - name: Build for production
         run: yarn build --modern

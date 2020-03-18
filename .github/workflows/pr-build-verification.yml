@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: cd client
+      - working-directory: client
       - run: yarn
       - run: yarn lint
       - run: yarn test
@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: cd server
+      - working-directory: server
       - run: yarn
       - run: yarn lint
       - run: yarn test

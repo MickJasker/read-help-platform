@@ -1,39 +1,37 @@
+name: Node CI PR verify pipeline
 
-@@ -1,37 +0,0 @@
-name: Node CI PR verify pipeline	
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - 'master'
 
-on:	
-  pull_request:	
-    branches:	
-      - 'develop'	
-      - 'master'	
-
-jobs:	
-  test_client:	
-    runs-on: ubuntu-latest	
-    steps:	
-      - uses: actions/checkout@v2	
-      - uses: actions/setup-node@v1	
-        with:	
-          node-version: 12	
-      - run: cd ../client	
-      - run: yarn	
-      - run: yarn lint	
-      - run: yarn test	
-      - run: yarn build --modern	
-    env:	
-      CI: true	
-  test_server:	
-    runs-on: ubuntu-latest	
-    steps:	
-      - uses: actions/checkout@v2	
-      - uses: actions/setup-node@v1	
-        with:	
-          node-version: 12	
-      - run: cd ../server	
-      - run: yarn	
-      - run: yarn lint	
-      - run: yarn test	
-      - run: yarn build	
-    env:	
-      CI: true	
+jobs:
+  test_client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: cd ../client
+      - run: yarn
+      - run: yarn lint
+      - run: yarn test
+      - run: yarn build --modern
+    env:
+      CI: true
+  test_server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: cd ../server
+      - run: yarn
+      - run: yarn lint
+      - run: yarn test
+      - run: yarn build
+    env:
+      CI: true

@@ -14,11 +14,18 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - working-directory: client
-      - run: yarn
-      - run: yarn lint
-      - run: yarn test
-      - run: yarn build --modern
+      - name: Install dependencies
+        run: yarn
+        working-directory: client
+      - name: Lint source code
+        run: yarn lint
+        working-directory: client
+      - name: Run test suite
+        run: yarn test
+        working-directory: client
+      - name: Build for production
+        run: yarn build --modern
+        working-directory: client
     env:
       CI: true
   test_server:
@@ -28,10 +35,17 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - working-directory: server
-      - run: yarn
-      - run: yarn lint
-      - run: yarn test
-      - run: yarn build
+      - name: Install dependencies
+        run: yarn
+        working-directory: server
+      - name: Lint source code
+        run: yarn lint
+        working-directory: server
+      - name: Run test suite
+        run: yarn test
+        working-directory: server
+      - name: Build for production
+        run: yarn build
+        working-directory: server
     env:
       CI: true

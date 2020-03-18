@@ -1,0 +1,51 @@
+name: Node CI PR verify pipeline
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - 'master'
+
+jobs:
+  test_client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install dependencies
+        run: yarn
+        working-directory: client
+      - name: Lint source code
+        run: yarn lint
+        working-directory: client
+      - name: Run test suite
+        run: yarn test:unit
+        working-directory: client
+      - name: Build for production
+        run: yarn build --modern
+        working-directory: client
+    env:
+      CI: true
+  test_server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install dependencies
+        run: yarn
+        working-directory: server
+      - name: Lint source code
+        run: yarn lint
+        working-directory: server
+      - name: Run test suite
+        run: yarn test
+        working-directory: server
+      - name: Build for production
+        run: yarn build
+        working-directory: server
+    env:
+      CI: true

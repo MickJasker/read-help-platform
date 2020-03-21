@@ -1,4 +1,4 @@
-name: Node CI PR verify pipeline
+name: Node CI deploy pipeline
 
 on:
   push:
@@ -46,15 +46,15 @@ jobs:
       - name: Build for production
         run: yarn build
         working-directory: server
-    firebase_deploy:
-      runs-on: ubuntu-latest
-      needs: [build_client, build_server]
-      steps:
-        - uses: actions/checkout@v2
-        - uses: actions/setup-node@v1
-        - uses: w9jds/firebase-action@master
-          with:
-            args: deploy
+  firebase_deploy:
+    runs-on: ubuntu-latest
+    needs: [build_client, build_server]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy
     env:
       CI: true
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

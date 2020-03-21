@@ -1,7 +1,8 @@
-import Api from '@/data/Api/Api';
-import firebase from 'firebase/app';
-import 'firebase/storage';
+
 import { AxiosResponse } from 'axios';
+import firebase from 'firebase/app';
+import NestApi from './NestApi';
+import 'firebase/storage';
 
 interface Vertex {
   x: number;
@@ -29,19 +30,10 @@ export interface ImageTextResponse extends AxiosResponse {
   data: ImageTextData;
 }
 
-export default class ImageTextApi extends Api {
+export default class ImageTextApi extends NestApi {
   constructor() {
-    let endpoint = '';
-
-    if (process.env.NODE_ENV === 'production') {
-      endpoint = 'https://us-central1-read-help-platform.cloudfunctions.net/api';
-    } else {
-      endpoint = 'http://localhost:3000';
-    }
-
-    endpoint = `${endpoint}/image-text`;
-
-    super(endpoint);
+    super();
+    this.endpoint = `${this.endpoint}/image-text`;
   }
 
   public async transformImageToText(file: File): Promise<string> {
@@ -50,7 +42,7 @@ export default class ImageTextApi extends Api {
     return ref
       .put(file)
       .then((snapshot) => snapshot.ref.getDownloadURL())
-      .then((url) => this.httpService.post(this.endpoint, {
+      .then((url: string) => this.httpService.post(this.endpoint, {
         image: url,
       }))
       .then((response: ImageTextResponse) => response.data.description);

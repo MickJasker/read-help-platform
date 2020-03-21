@@ -72,3 +72,10 @@ jobs:
     env:
       CI: true
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      VUE_APP_API_KEY: ${{ secrets.VUE_APP_API_KEY }}
+      VUE_APP_AUTH_DOMAIN: ${{ secrets.VUE_APP_AUTH_DOMAIN }}
+      VUE_APP_DATABASE_URL: ${{ secrets.VUE_APP_DATABASE_URL }}
+      VUE_APP_PROJECT_ID: ${{ secrets.VUE_APP_PROJECT_ID }}
+      VUE_APP_STORAGE_BUCKET: ${{ secrets.VUE_APP_STORAGE_BUCKET }}
+      VUE_APP_MESSAGE_SENDER_ID: ${{ secrets.VUE_APP_MESSAGE_SENDER_ID }}
+      VUE_APP_MEASURE_ID: ${{ secrets.VUE_APP_MEASURE_ID }}

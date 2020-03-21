@@ -14,11 +14,15 @@ export class ImageTextService {
     if (!detection) {
       const {error} = result;
 
+      if (!error) {
+        throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+
       if (error.code === 2) {
         throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
       } else if (error.code === 7 || error.code === 16) {
         throw new HttpException(error.message, HttpStatus.UNAUTHORIZED);
-      } else if (error.code === 13) {
+      } else if (error.code === 13 || error.code === 4) {
         throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
       } else {
         throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);

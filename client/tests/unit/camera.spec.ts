@@ -6,5 +6,5 @@ describe('Camera', () => {
     const camera = shallowMount(Camera);
 
     expect(camera.exists()).toBe(true);
-  })
+  });
 });

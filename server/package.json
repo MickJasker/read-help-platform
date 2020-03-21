@@ -4,6 +4,10 @@
   "description": "",
   "author": "",
   "license": "MIT",
+  "main": "dist/index.js",
+  "engines": {
+    "node": "8"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -24,6 +28,8 @@
     "@nestjs/common": "^6.10.14",
     "@nestjs/core": "^6.10.14",
     "@nestjs/platform-express": "^6.10.14",
+    "firebase-admin": "^8.10.0",
+    "firebase-functions": "^3.5.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.4"

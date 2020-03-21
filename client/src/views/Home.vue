@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <Camera />
+    <FileSelector />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Camera from '@/components/Camera.vue';
+import FileSelector from '@/components/FileSelector.vue';
 
 export default {
   name: 'Home',
   components: {
-    Camera,
+    FileSelector,
   },
 };
 </script>

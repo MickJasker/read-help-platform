@@ -27,36 +27,8 @@
 
 <script lang=ts>
 import { Vue, Component } from 'vue-property-decorator';
-import firebase from 'firebase/app';
 import 'firebase/storage';
-import axios, { AxiosResponse } from 'axios';
-
-
-interface Vertex {
-  x: number;
-  y: number;
-}
-
-interface BoundingPoly {
-  vertices: Vertex[];
-  normalizedVertices: unknown[];
-}
-
-interface ImageTextData {
-  locations: unknown[];
-  properties: unknown[];
-  mid: string;
-  locale: string;
-  description: string;
-  score: number;
-  confidence: number;
-  topicality: number;
-  boundingPoly: BoundingPoly;
-}
-
-interface ImageTextResponse extends AxiosResponse {
-  data: ImageTextData;
-}
+import { ImageTextApi } from '@/data/Api';
 
 enum Status {
   uploading = 'UPLOADING',
@@ -75,21 +47,17 @@ export default class FileSelector extends Vue {
   upload() {
     // @ts-ignore
     const file: File = this.$refs.file.files[0];
+    const imageTextApi = new ImageTextApi();
 
-    const ref = firebase.storage().ref(`textImages/${file.name}`);
-
-    this.error = null;
     this.response = null;
     this.status = Status.uploading;
-    ref
-      .put(file)
-      .then((snapshot) => snapshot.ref.getDownloadURL())
-      .then((url) => axios.post('http://192.168.0.180:3000/image-text', {
-        image: url,
-      }))
-      .then((response: ImageTextResponse) => {
-        this.response = response.data.description;
+    this.error = null;
+
+    imageTextApi
+      .transformImageToText(file)
+      .then((text: string) => {
         this.status = Status.complete;
+        this.response = text;
       })
       .catch((err) => {
         this.error = err;

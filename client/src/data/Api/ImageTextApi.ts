@@ -36,7 +36,7 @@ export default class ImageTextApi extends NestApi {
     this.endpoint = `${this.endpoint}/image-text`;
   }
 
-  public async transformImageToText(file: File): Promise<string> {
+  public async transformImageToText(file: File): Promise<ImageTextResponse> {
     const ref = firebase.storage().ref(`textImages/${file.name}`);
 
     return ref
@@ -45,6 +45,6 @@ export default class ImageTextApi extends NestApi {
       .then((url: string) => this.httpService.post(this.endpoint, {
         image: url,
       }))
-      .then((response: ImageTextResponse) => response.data.description);
+      .then((response: ImageTextResponse) => response);
   }
 }

@@ -22,13 +22,22 @@
     <h2 v-if="status">
       {{ status }}
     </h2>
+
+    <audio
+      v-if="audioResponse"
+      ref="player"
+      controls
+      autoPlay
+      :src="`data:audio/mpeg;base64,${audioResponse}`"
+    />
   </form>
 </template>
 
 <script lang=ts>
 import { Vue, Component } from 'vue-property-decorator';
 import 'firebase/storage';
-import { ImageTextApi } from '@/data/Api';
+import { ImageTextApi, TextSpeechApi } from '@/data/Api';
+import { ImageTextResponse } from '@/data/Api/ImageTextApi';
 
 enum Status {
   uploading = 'UPLOADING',
@@ -44,6 +53,8 @@ export default class FileSelector extends Vue {
 
   status: Status | null = null;
 
+  audioResponse: string | null = null;
+
   upload() {
     // @ts-ignore
     const file: File = this.$refs.file.files[0];
@@ -55,14 +66,42 @@ export default class FileSelector extends Vue {
 
     imageTextApi
       .transformImageToText(file)
-      .then((text: string) => {
+      .then((data: ImageTextResponse) => {
         this.status = Status.complete;
-        this.response = text;
+        this.response = data.data.description;
+
+        this.playText(data.data.locale);
       })
       .catch((err) => {
         this.error = err;
         this.status = Status.error;
       });
+  }
+
+  playText(locale?: string) {
+    const textToSpeechApi = new TextSpeechApi();
+
+    let defLocale = 'en-US';
+
+    if (locale) {
+      defLocale = `${locale}-${locale.toUpperCase()}`;
+
+      if (locale === 'en') {
+        defLocale = `${locale}-US`;
+      }
+    }
+
+    if (this.response) {
+      this.error = null;
+      textToSpeechApi
+        .transformTextToSpeech(this.response, defLocale)
+        .then((response) => {
+          this.audioResponse = response.audioContent;
+        })
+        .catch((err) => {
+          this.error = err;
+        });
+    }
   }
 }
 </script>

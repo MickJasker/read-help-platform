@@ -7,48 +7,8 @@ on:
 
 jobs:
   build_client:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 8
-      - name: Install dependencies
-        run: yarn
-        working-directory: client
-      - name: Lint source code
-        run: yarn lint
-        working-directory: client
-      - name: Run test suite
-        run: yarn test:unit
-        working-directory: client
-      - name: Build for production
-        run: yarn build --modern
-        working-directory: client
-    env:
-      CI: true
-  build_server:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 8
-      - name: Install dependencies
-        run: yarn
-        working-directory: server
-      - name: Lint source code
-        run: yarn lint
-        working-directory: server
-      - name: Run test suite
-        run: yarn test
-        working-directory: server
-      - name: Build for production
-        run: yarn build
-        working-directory: server
   firebase_deploy:
     runs-on: ubuntu-latest
-    needs: [build_client, build_server]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -57,12 +17,12 @@ jobs:
       - name: Install server dependencies
         run: yarn
         working-directory: server
-      - name: Install client dependencies
-        run: yarn
-        working-directory: client
       - name: Build server for production
         run: yarn build
         working-directory: server
+      - name: Install client dependencies
+        run: yarn
+        working-directory: client
       - name: Build client for production
         run: yarn build --modern
         working-directory: client
@@ -79,3 +39,4 @@ jobs:
       VUE_APP_STORAGE_BUCKET: ${{ secrets.VUE_APP_STORAGE_BUCKET }}
       VUE_APP_MESSAGE_SENDER_ID: ${{ secrets.VUE_APP_MESSAGE_SENDER_ID }}
       VUE_APP_MEASURE_ID: ${{ secrets.VUE_APP_MEASURE_ID }}
+      VUE_APP_APP_ID: ${{ secrets.VUE_APP_APP_ID }}

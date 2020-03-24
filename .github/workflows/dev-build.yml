@@ -6,7 +6,6 @@ on:
       - 'develop'
 
 jobs:
-  build_client:
   firebase_deploy:
     runs-on: ubuntu-latest
     steps:

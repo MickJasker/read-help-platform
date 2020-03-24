@@ -24,6 +24,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@google-cloud/text-to-speech": "^2.3.0",
     "@google-cloud/vision": "^1.11.0",
     "@nestjs/common": "^6.10.14",
     "@nestjs/core": "^6.10.14",

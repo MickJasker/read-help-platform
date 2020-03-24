@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ImageTextController } from '../image-text.controller';
-import {ImageTextService} from "../image-text.service";
+import {ImageTextService} from "../../services/image-text.service";
 
 describe('ImageText Controller', () => {
   let controller: ImageTextController;

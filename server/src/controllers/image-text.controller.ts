@@ -1,5 +1,5 @@
 import {Controller, Post, Body} from '@nestjs/common';
-import {ImageTextService} from './image-text.service';
+import {ImageTextService} from '../services/image-text.service';
 
 @Controller('image-text')
 export class ImageTextController {

@@ -293,6 +293,13 @@
     through2 "^3.0.0"
     xdg-basedir "^4.0.0"
 
+"@google-cloud/text-to-speech@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@google-cloud/text-to-speech/-/text-to-speech-2.3.0.tgz#f1803151b0befdb433acb424b2bd07d776e3f347"
+  integrity sha512-Rjx/lN7FjA6YYXcOmC707d1gKxkGS5F6nxs+R6QcssJwZbIfZ9/nhyl0m3jZU39dNe+yT9CeJynp3jaZ9G7Bzw==
+  dependencies:
+    google-gax "^1.9.0"
+
 "@google-cloud/vision@^1.11.0":
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/@google-cloud/vision/-/vision-1.11.0.tgz#361d9133b7825efbb67fd5686f9e7432f20334b4"
@@ -3370,7 +3377,7 @@ google-auth-library@^5.0.0, google-auth-library@^5.5.0:
     jws "^4.0.0"
     lru-cache "^5.0.0"
 
-google-gax@^1.13.0, google-gax@^1.14.1:
+google-gax@^1.13.0, google-gax@^1.14.1, google-gax@^1.9.0:
   version "1.15.1"
   resolved "https://registry.yarnpkg.com/google-gax/-/google-gax-1.15.1.tgz#a1fa5448e077d94dcf643e7cb0e0cc413a328217"
   integrity sha512-1T1PwSZWnbdRusA+NCZMSe56iU6swGvuZuy54eYl9vEHiRXTLYbQmUkWY2CqgYD9Fd/T4WBkUl22+rZG80unyw==

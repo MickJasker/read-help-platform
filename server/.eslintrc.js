@@ -25,6 +25,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
     'class-methods-use-this': 'off',
-    'no-useless-constructor': 'off'
+    'no-useless-constructor': 'off',
+    '@typescript-eslint/ban-ts-ignore': 'off'
   },
 };

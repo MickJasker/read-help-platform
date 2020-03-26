@@ -67,10 +67,14 @@ export default class FileSelector extends Vue {
     imageTextApi
       .transformImageToText(file)
       .then((data: ImageTextResponse) => {
-        this.status = Status.complete;
-        this.response = data.data.description;
+        const { description, locale } = data.data;
+        this.response = description;
 
-        this.playText(data.data.locale);
+        return FileSelector.playText(description, locale);
+      })
+      .then((audioContent: string) => {
+        this.status = Status.complete;
+        this.audioResponse = audioContent;
       })
       .catch((err) => {
         this.error = err;
@@ -78,7 +82,7 @@ export default class FileSelector extends Vue {
       });
   }
 
-  playText(locale?: string) {
+  private static async playText(text: string, locale?: string) {
     const textToSpeechApi = new TextSpeechApi();
 
     let defLocale = 'en-US';
@@ -90,18 +94,9 @@ export default class FileSelector extends Vue {
         defLocale = `${locale}-US`;
       }
     }
+    const response = await textToSpeechApi.transformTextToSpeech(text, defLocale);
 
-    if (this.response) {
-      this.error = null;
-      textToSpeechApi
-        .transformTextToSpeech(this.response, defLocale)
-        .then((response) => {
-          this.audioResponse = response.audioContent;
-        })
-        .catch((err) => {
-          this.error = err;
-        });
-    }
+    return response.audioContent;
   }
 }
 </script>

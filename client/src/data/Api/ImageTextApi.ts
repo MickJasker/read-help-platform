@@ -1,4 +1,3 @@
-
 import { AxiosResponse } from 'axios';
 import firebase from 'firebase/app';
 import NestApi from './NestApi';
@@ -37,14 +36,26 @@ export default class ImageTextApi extends NestApi {
   }
 
   public async transformImageToText(file: File): Promise<ImageTextResponse> {
+    const ref = await ImageTextApi.uploadImage(file);
+    const imageUrl = await ref.getDownloadURL() as string;
+    const text = await this.getTextFromImage(imageUrl);
+    await ImageTextApi.deleteImageFromBucket(ref);
+
+    return text;
+  }
+
+  private async getTextFromImage(imageUrl: string): Promise<ImageTextResponse> {
+    return this.post({ image: imageUrl });
+  }
+
+  private static async uploadImage(file: File): Promise<firebase.storage.Reference> {
     const ref = firebase.storage().ref(`textImages/${file.name}`);
 
-    return ref
-      .put(file)
-      .then((snapshot) => snapshot.ref.getDownloadURL())
-      .then((url: string) => this.httpService.post(this.endpoint, {
-        image: url,
-      }))
-      .then((response: ImageTextResponse) => response);
+    const snapshot = await ref.put(file);
+    return snapshot.ref;
+  }
+
+  private static async deleteImageFromBucket(ref: firebase.storage.Reference): Promise<void> {
+    await ref.delete();
   }
 }

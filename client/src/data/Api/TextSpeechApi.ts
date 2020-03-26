@@ -15,10 +15,7 @@ export default class TextSpeechApi extends NestApi {
   }
 
   public async transformTextToSpeech(text: string, locale: string): Promise<TextToSpeechResponse> {
-    const response = await this.httpService.post(this.endpoint, {
-      text,
-      locale,
-    });
+    const response = await this.post({ text, locale });
 
     return response.data;
   }

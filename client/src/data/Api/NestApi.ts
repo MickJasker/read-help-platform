@@ -7,7 +7,8 @@ export default class NestApi extends Api {
     if (process.env.NODE_ENV === 'production') {
       endpoint = 'https://us-central1-read-help-platform.cloudfunctions.net/api';
     } else {
-      endpoint = 'http://localhost:3000';
+      const { location } = window;
+      endpoint = `${location.protocol}//${location.hostname}:3000`;
     }
     super(endpoint);
   }

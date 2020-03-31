@@ -13,9 +13,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 8
-      - name: Set npm config
-        run: npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
-          npm config set "//npm.fontawesome.com/:_authToken" $FONTAWESOME_NPM_AUTH_TOKEN
         working-directory: client
       - name: Install server dependencies
         run: yarn

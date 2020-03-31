@@ -4,6 +4,19 @@
   </div>
 </template>
 
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import { authController } from '@/data/User';
+
+@Component
+export default class App extends Vue {
+  // eslint-disable-next-line class-methods-use-this
+  mounted() {
+    authController.signInWithTempAccount().catch((err) => console.error(err));
+  }
+}
+</script>
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

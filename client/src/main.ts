@@ -3,8 +3,9 @@ import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
 import store from './store';
-import './firebase';
 import '@/assets/scss/base.scss';
+import '@/util/firebase';
+import '@/util/icons';
 
 Vue.config.productionTip = false;
 

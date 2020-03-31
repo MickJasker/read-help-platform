@@ -11,6 +11,7 @@
       @change="upload"
     >
     <label for="file">
+      <font-awesome-icon :icon="['fas', 'file-alt']" />
       Maak een foto
     </label>
     <h1 v-if="error">

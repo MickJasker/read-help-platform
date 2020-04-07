@@ -1,5 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500,600,700&display=swap');
 @import './_variables.scss';
+
+:root {
+  --color-accent: #{$colorAccent};
+  --color-primary: #{$colorPrimary};
+  --color-dark: #{$colorDark};
+  --color-light: #{$colorLight};
+}
 
 html {
   font-size: 8px;
@@ -8,6 +15,11 @@ html {
   background: $colorLight;
   color: $colorDark;
   -webkit-tap-highlight-color: rgba(#000, 0);
+}
+
+body {
+  padding: 0;
+  margin: 0;
 }
 
 *,

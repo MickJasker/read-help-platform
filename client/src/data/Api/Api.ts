@@ -19,9 +19,9 @@ export default class Api {
 
   protected async get(path?: string): Promise<AxiosResponse> {
     if (path) {
-      return this.httpService.post(`${this.endpoint}/${path}`);
+      return this.httpService.get(`${this.endpoint}/${path}`);
     }
 
-    return this.httpService.post(this.endpoint);
+    return this.httpService.get(this.endpoint);
   }
 }

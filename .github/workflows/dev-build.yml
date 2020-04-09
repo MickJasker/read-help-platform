@@ -13,7 +13,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 8
-        working-directory: client
       - name: Install server dependencies
         run: yarn
         working-directory: server

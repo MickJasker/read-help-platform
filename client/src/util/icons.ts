@@ -6,5 +6,5 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-library.add(faFileAlt, faPause, faPlay);
-library.add(faFileAlt, faCamera);
+library.add(faFileAlt, faPause, faPlay, faCamera);
+

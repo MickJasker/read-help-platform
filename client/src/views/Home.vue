@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import Camera from '@/components/Camera.vue';
+import Camera from '@/components/molecules/Camera.vue';
 import { ImageTextApi } from '@/data/Api';
 import Loader from '@/components/Loader.vue';
 

@@ -1,0 +1,30 @@
+version: '3'
+services:
+
+  client:
+    build: ./client
+    container_name: client
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    volumes:
+      - ./client/src:/srv/app/read-help-platform/src
+      - ./client/public:/srv/app/read-help-platform/public
+    command: yarn serve
+    links:
+      - server
+
+  server:
+    build: ./server
+    container_name: server
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    volumes:
+      - ./server/src:/srv/app/read-help-platform/src
+      - ./server/public:/srv/app/read-help-platform/public
+    command: yarn start:dev
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=./serviceAccount.json

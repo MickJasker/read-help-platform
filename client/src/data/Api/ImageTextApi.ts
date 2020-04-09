@@ -30,6 +30,8 @@ export interface ImageTextResponse extends AxiosResponse {
 }
 
 export default class ImageTextApi extends NestApi {
+  public _imageTextData?: ImageTextData;
+
   constructor() {
     super();
     this.endpoint = `${this.endpoint}/image-text`;
@@ -40,6 +42,10 @@ export default class ImageTextApi extends NestApi {
     const imageUrl = await ref.getDownloadURL() as string;
     const text = await this.getTextFromImage(imageUrl);
     await ImageTextApi.deleteImageFromBucket(ref);
+
+    ImageTextApi.setInLocalStorage(text.data);
+
+    this._imageTextData = text.data;
 
     return text;
   }
@@ -57,5 +63,27 @@ export default class ImageTextApi extends NestApi {
 
   private static async deleteImageFromBucket(ref: firebase.storage.Reference): Promise<void> {
     await ref.delete();
+  }
+
+  private static setInLocalStorage(data: ImageTextData): void {
+    const { sessionStorage } = window;
+
+    sessionStorage.setItem('imageText', JSON.stringify(data));
+  }
+
+  public static async getLatestTextConversion(): Promise<ImageTextData> {
+    const { sessionStorage } = window;
+
+    const imageTextData = sessionStorage.getItem('imageText');
+
+    if (!imageTextData) {
+      throw new Error('Object not found');
+    }
+
+    return JSON.parse(imageTextData);
+  }
+
+  public get imageTextData(): ImageTextData | undefined {
+    return this._imageTextData;
   }
 }

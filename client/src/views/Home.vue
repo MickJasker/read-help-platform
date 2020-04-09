@@ -33,9 +33,11 @@ export default class Home extends Vue {
     imageTextApi
       .transformImageToText(file)
       .then(() => {
-        // TODO: Redirect to text page
+        this.$router.push('/reader');
       })
-      .catch((err) => { this.error = err; })
+      .catch((err) => {
+        this.error = err;
+      })
       .finally(() => {
         this.loading = false;
       });

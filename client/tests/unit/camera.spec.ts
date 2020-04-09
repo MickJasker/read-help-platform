@@ -1,4 +1,4 @@
-import Camera from '@/components/Camera.vue';
+import Camera from '@/components/molecules/Camera.vue';
 import { shallowMount } from '@vue/test-utils';
 import '@/util/icons';
 

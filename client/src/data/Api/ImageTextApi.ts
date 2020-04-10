@@ -37,6 +37,11 @@ export default class ImageTextApi extends NestApi {
     this.endpoint = `${this.endpoint}/image-text`;
   }
 
+  /**
+   * Converts an image into a readable string
+   * @param file
+   * @async
+   */
   public async transformImageToText(file: File): Promise<ImageTextResponse> {
     const ref = await ImageTextApi.uploadImage(file);
     const imageUrl = await ref.getDownloadURL() as string;
@@ -71,6 +76,10 @@ export default class ImageTextApi extends NestApi {
     sessionStorage.setItem('imageText', JSON.stringify(data));
   }
 
+  /**
+   * Get the previous conversion from the `sessionStorage`.
+   * Will throw an error if the `sessionStorage` is empty.
+   */
   public static async getLatestTextConversion(): Promise<ImageTextData> {
     const { sessionStorage } = window;
 

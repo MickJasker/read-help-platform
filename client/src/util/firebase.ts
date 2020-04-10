@@ -1,4 +1,6 @@
 import firebase from 'firebase/app';
+import 'firebase/analytics';
+import 'firebase/performance';
 
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_API_KEY,
@@ -11,4 +13,12 @@ const firebaseConfig = {
   measurementId: process.env.VUE_APP_MEASURE_ID,
 };
 
-firebase.initializeApp(firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+const performance = firebase.performance();
+
+const analytics = firebase.analytics();
+
+export default firebaseApp;
+
+export { performance, analytics };

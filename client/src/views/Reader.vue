@@ -24,6 +24,7 @@ import TextContainer from '@/components/organisms/TextContainer.vue';
 import AudioControls from '@/components/organisms/AudioControls.vue';
 import AudioPlayer from '@/components/atoms/AudioPlayer.vue';
 import { ImageTextApi, TextSpeechApi } from '@/data/Api';
+import { performance, analytics } from '@/util/firebase';
 
 @Component({
   components: {
@@ -58,7 +59,11 @@ export default class Reader extends Vue {
 
   async handlePlay() {
     if (!this.audioSource) {
+      const performanceTrace = performance.trace('loadAudioBinary');
+
+      performanceTrace.start();
       await this.loadAudioSource();
+      performanceTrace.stop();
     }
 
     await this.$nextTick();
@@ -77,17 +82,20 @@ export default class Reader extends Vue {
   }
 
   handleEnded() {
-    const { audioControls } = this.$refs;
+    const audioControls = this.$refs.audioControls as AudioControls;
 
-    // @ts-ignore
     audioControls.handleEnded();
   }
 
   private loadAudioSource() {
     const textToSpeech = new TextSpeechApi();
     this.loading = true;
+    const { text, locale } = this;
+
+    analytics.logEvent('transformTextToSpeech', { locale });
+
     return textToSpeech
-      .transformTextToSpeech(this.text, this.locale)
+      .transformTextToSpeech(text, locale)
       .then((response) => {
         this.audioSource = response.audioContent;
 
@@ -100,16 +108,14 @@ export default class Reader extends Vue {
   }
 
   handleForward() {
-    const { audioPlayer } = this.$refs;
+    const audioPlayer = this.$refs.audioPlayer as AudioPlayer;
 
-    // @ts-ignore
     audioPlayer.forward(5);
   }
 
   handleBackward() {
-    const { audioPlayer } = this.$refs;
+    const audioPlayer = this.$refs.audioPlayer as AudioPlayer;
 
-    // @ts-ignore
     audioPlayer.backward(5);
   }
 }

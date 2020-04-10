@@ -14,6 +14,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import Camera from '@/components/molecules/Camera.vue';
 import { ImageTextApi } from '@/data/Api';
 import Loader from '@/components/Loader.vue';
+import { analytics, performance } from '@/util/firebase';
 
 @Component({
   components: {
@@ -29,10 +30,16 @@ export default class Home extends Vue {
   handleUpload(file: File) {
     const imageTextApi = new ImageTextApi();
 
+    const performanceTrace = performance.trace('convertImageToText');
+    performanceTrace.start();
+
     this.loading = true;
     imageTextApi
       .transformImageToText(file)
-      .then(() => {
+      .then((response) => {
+        analytics.logEvent('transformImageToText', {
+          locale: response.data.locale,
+        });
         this.$router.push('/reader');
       })
       .catch((err) => {
@@ -40,6 +47,8 @@ export default class Home extends Vue {
       })
       .finally(() => {
         this.loading = false;
+
+        performanceTrace.stop();
       });
   }
 }

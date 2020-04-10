@@ -11,6 +11,7 @@
 
 <script lang=ts>
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import { analytics } from '@/util/firebase';
 
 @Component
 export default class AudioPlayer extends Vue {
@@ -23,18 +24,34 @@ export default class AudioPlayer extends Vue {
     audioElement.play();
   }
 
+  async mounted() {
+    await this.$nextTick();
+
+    const audioElement = this.$refs.audio as HTMLAudioElement;
+    analytics.logEvent('playAudio', {
+      duration: audioElement.duration,
+    });
+  }
+
   pause() {
     const audioElement = this.$refs.audio as HTMLAudioElement;
 
     audioElement.pause();
   }
 
+  /**
+   * Skips the audio player to `amount` of secconds ahead
+   */
   forward(amount: number) {
     const audioElement = this.$refs.audio as HTMLAudioElement;
 
     audioElement.currentTime += amount;
   }
 
+
+  /**
+   * Reverts the audio player to `amount` of secconds backwards
+   */
   backward(amount: number) {
     const audioElement = this.$refs.audio as HTMLAudioElement;
 

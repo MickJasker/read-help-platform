@@ -14,8 +14,28 @@ export default class TextSpeechApi extends NestApi {
     this.endpoint = `${this.endpoint}/text-to-speech`;
   }
 
+  private static determineLocale(locale: string): string {
+    let newLocale = locale;
+    switch (locale) {
+      case 'en':
+        newLocale = 'en-US';
+        break;
+      case 'ar':
+        newLocale = 'ar-SA';
+        break;
+      default:
+        newLocale = `${locale.toLowerCase()}-${locale.toUpperCase()}`;
+        break;
+    }
+
+    return newLocale;
+  }
+
   public async transformTextToSpeech(text: string, locale: string): Promise<TextToSpeechResponse> {
-    const response = await this.post({ text, locale });
+    const response = await this.post({
+      text,
+      locale: TextSpeechApi.determineLocale(locale),
+    });
 
     return response.data;
   }

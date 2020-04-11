@@ -27,12 +27,16 @@ export default class AuthController {
       throw new Error('User is not defined');
     }
 
-    const userCollectionConnection = new UserCollection();
-    const user = await userCollectionConnection.getUserFromId(userCred.user.uid);
-
-    this.currentUser = new User(userCred.user.uid, user.name, user.mail);
+    this.currentUser = await AuthController.getUserFromDatabase(userCred.user.uid);
 
     return this.currentUser as User;
+  }
+
+  private static async getUserFromDatabase(uid: string): Promise<User> {
+    const userCollectionConnection = new UserCollection();
+    const user = await userCollectionConnection.getUserFromId(uid);
+
+    return new User(uid, user.name, user.email);
   }
 }
 

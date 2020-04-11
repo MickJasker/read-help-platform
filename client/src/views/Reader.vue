@@ -15,9 +15,13 @@
       @forward="handleForward"
       @backward="handleBackward"
     />
+    <LetterSize />
+    <TextContainer />
+    <AudioControls />
   </div>
 </template>
 
+import LetterSize from '@/components/organisms/LetterSize.vue';
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import TextContainer from '@/components/organisms/TextContainer.vue';
@@ -30,6 +34,7 @@ import { performance, analytics } from '@/util/firebase';
   components: {
     TextContainer,
     AudioControls,
+    LetterSize,
     AudioPlayer,
   },
 })

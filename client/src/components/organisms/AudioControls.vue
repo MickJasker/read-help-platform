@@ -93,6 +93,7 @@ section {
 
     .play-state {
       font-size: 5rem;
+      color: var(--color-light);
 
       &.spinner {
         animation: spin 1s ease infinite;

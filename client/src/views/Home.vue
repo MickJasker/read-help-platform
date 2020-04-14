@@ -13,7 +13,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import Camera from '@/components/molecules/Camera.vue';
 import { ImageTextApi } from '@/data/Api';
-import Loader from '@/components/Loader.vue';
+import Loader from '@/components/organisms/Loader.vue';
 import { analytics, performance } from '@/util/firebase';
 
 @Component({

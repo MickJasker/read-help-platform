@@ -1,6 +1,6 @@
 <template>
   <div class="reader">
-    <LetterSize />
+    <HelpButton @help="askForHelp" />
     <TextContainer>{{ text }}</TextContainer>
     <AudioPlayer
       v-if="audioSource"
@@ -8,6 +8,9 @@
       :src="audioSource"
       @ended="handleEnded"
     />
+    <p v-if="error">
+      {{ error }}
+    </p>
     <AudioControls
       ref="audioControls"
       :loading="loading"
@@ -23,16 +26,17 @@
 import { Vue, Component } from 'vue-property-decorator';
 import TextContainer from '@/components/organisms/TextContainer.vue';
 import AudioControls from '@/components/organisms/AudioControls.vue';
-import LetterSize from '@/components/organisms/LetterSize.vue';
+import HelpButton from '@/components/organisms/HelpButton.vue';
 import AudioPlayer from '@/components/atoms/AudioPlayer.vue';
 import { ImageTextApi, TextSpeechApi } from '@/data/Api';
 import { performance, analytics } from '@/util/firebase';
+import Share from '@/data/Share';
 
 @Component({
   components: {
     TextContainer,
     AudioControls,
-    LetterSize,
+    HelpButton,
     AudioPlayer,
   },
 })
@@ -120,6 +124,16 @@ export default class Reader extends Vue {
     const audioPlayer = this.$refs.audioPlayer as AudioPlayer;
 
     audioPlayer.backward(5);
+  }
+
+  askForHelp() {
+    Share
+      .share({
+        text: this.text,
+      })
+      .catch((err) => {
+        this.error = err;
+      });
   }
 }
 </script>

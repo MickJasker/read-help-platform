@@ -6,6 +6,7 @@ import {
   faPlay,
   faUndo,
   faSpinnerThird,
+  faPaperPlane,
 } from '@fortawesome/pro-solid-svg-icons';
 import { faCamera } from '@fortawesome/pro-light-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -19,4 +20,5 @@ library.add(
   faCamera,
   faUndo,
   faSpinnerThird,
+  faPaperPlane,
 );

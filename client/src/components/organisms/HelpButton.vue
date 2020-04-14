@@ -1,7 +1,7 @@
 <template>
   <section class="help-button">
     <div class="wrapper">
-      <img src="@/assets/svg/help.svg">
+      <img @click="$emit('help')" src="@/assets/svg/help.svg">
     </div>
   </section>
 </template>

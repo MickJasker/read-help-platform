@@ -1,6 +1,6 @@
 <template>
   <div class="reader">
-    <HelpButton />
+    <HelpButton @help="askForHelp" />
     <TextContainer>{{ text }}</TextContainer>
     <AudioPlayer
       v-if="audioSource"
@@ -8,6 +8,9 @@
       :src="audioSource"
       @ended="handleEnded"
     />
+    <p v-if="error">
+      {{ error }}
+    </p>
     <AudioControls
       ref="audioControls"
       :loading="loading"
@@ -27,6 +30,7 @@ import HelpButton from '@/components/organisms/HelpButton.vue';
 import AudioPlayer from '@/components/atoms/AudioPlayer.vue';
 import { ImageTextApi, TextSpeechApi } from '@/data/Api';
 import { performance, analytics } from '@/util/firebase';
+import Share from '@/data/Share';
 
 @Component({
   components: {
@@ -120,6 +124,17 @@ export default class Reader extends Vue {
     const audioPlayer = this.$refs.audioPlayer as AudioPlayer;
 
     audioPlayer.backward(5);
+  }
+
+  askForHelp() {
+    console.log('log');
+    Share
+      .share({
+        text: this.text,
+      })
+      .catch((err) => {
+        this.error = err;
+      });
   }
 }
 </script>

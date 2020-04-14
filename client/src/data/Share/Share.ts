@@ -1,15 +1,14 @@
-export default class Share extends Navigator {
-  static async share(options: ShareData) {
+export default class Share {
+  static async share(options: ShareData): Promise<void> {
     if (!Share.isSupported) {
       throw new Error('share is not supported by this browser');
     }
 
-    return navigator.share(options);
-
+    return window.navigator.share(options);
   }
 
   static isSupported(): boolean {
-    if (navigator.share()) {
+    if (window.navigator.share()) {
       return true;
     }
     return false;

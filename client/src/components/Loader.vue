@@ -121,7 +121,6 @@ export default class Loader extends Vue {
   justify-content: center;
   align-items: center;
   svg {
-    border: 3px solid aqua;
     width: 100px;
     height: 100px;
   }

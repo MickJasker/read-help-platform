@@ -127,7 +127,6 @@ export default class Reader extends Vue {
   }
 
   askForHelp() {
-    console.log('log');
     Share
       .share({
         text: this.text,

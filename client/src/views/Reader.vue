@@ -16,11 +16,9 @@
       @forward="handleForward"
       @backward="handleBackward"
     />
-    <TextContainer />
   </div>
 </template>
 
-import LetterSize from '@/components/organisms/LetterSize.vue';
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import TextContainer from '@/components/organisms/TextContainer.vue';

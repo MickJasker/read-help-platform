@@ -1,7 +1,6 @@
 <template>
   <div class="loader">
     <div class="content">
-      <!-- <img src="@/assets/svg/loader.svg"> -->
       <svg
         viewBox="-30 -30 200 200"
         version="1.1"

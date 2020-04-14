@@ -18,7 +18,7 @@ section {
   display: flex;
   justify-content: center;
   p {
-    max-width: 80vw;
+    max-width: 80%;
     font-size: 2rem;
   }
 }

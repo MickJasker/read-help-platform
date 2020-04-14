@@ -77,15 +77,23 @@ export default class AudioPlayer extends Vue {
 
 <style scoped lang="scss">
 section {
+  width: 100%;
+  bottom: 0;
   display: flex;
   justify-content: center;
+  position: fixed;
+  left: 0;
+  padding: 4rem;
+  background: #242582;
   .toolbar {
-    margin-top: 3rem;
+
     display: flex;
     justify-content: space-between;
-    width: 70%;
+    width: 80%;
+
     .play-state {
       font-size: 5rem;
+      color: var(--color-light);
 
       &.spinner {
         animation: spin 1s ease infinite;

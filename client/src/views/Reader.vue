@@ -1,5 +1,6 @@
 <template>
   <div class="reader">
+    <LetterSize />
     <TextContainer>{{ text }}</TextContainer>
     <AudioPlayer
       v-if="audioSource"
@@ -22,6 +23,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import TextContainer from '@/components/organisms/TextContainer.vue';
 import AudioControls from '@/components/organisms/AudioControls.vue';
+import LetterSize from '@/components/organisms/LetterSize.vue';
 import AudioPlayer from '@/components/atoms/AudioPlayer.vue';
 import { ImageTextApi, TextSpeechApi } from '@/data/Api';
 import { performance, analytics } from '@/util/firebase';
@@ -30,6 +32,7 @@ import { performance, analytics } from '@/util/firebase';
   components: {
     TextContainer,
     AudioControls,
+    LetterSize,
     AudioPlayer,
   },
 })

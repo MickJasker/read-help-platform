@@ -16,6 +16,11 @@ const routes: RouteConfig[] = [
     name: 'Reader',
     component: () => import(/* webpackChunkName: "about" */ '../views/Reader.vue'),
   },
+  {
+    path: '/forward',
+    name: 'Forward',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Forward.vue'),
+  },
 ];
 
 export default routes;

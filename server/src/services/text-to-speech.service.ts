@@ -38,7 +38,10 @@ export class TextToSpeechService {
         languageCode: newLocale,
         name: `${newLocale}-Wavenet-B`,
       },
-      audioConfig: { audioEncoding: 'MP3'}
+      audioConfig: {
+        audioEncoding: 'MP3',
+        speakingRate: 0.75,
+      }
     }
   }
 }

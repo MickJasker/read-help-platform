@@ -163,9 +163,9 @@ export default class Reader extends Vue {
       }
 
       .share {
-        position: absolute;
+        position: fixed;
         right: 5rem;
-        bottom: 0;
+        bottom: 13rem;
       }
     }
   }

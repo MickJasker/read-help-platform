@@ -25,12 +25,14 @@ interface ImageTextData {
   boundingPoly: BoundingPoly;
 }
 
+type Reference = firebase.storage.Reference;
+
 export interface ImageTextResponse extends AxiosResponse {
   data: ImageTextData;
 }
 
 export default class ImageTextApi extends NestApi {
-  public _imageTextData?: ImageTextData;
+  private _imageTextData?: ImageTextData;
 
   constructor() {
     super();
@@ -45,8 +47,7 @@ export default class ImageTextApi extends NestApi {
   public async transformImageToText(file: File): Promise<ImageTextResponse> {
     const ref = await ImageTextApi.uploadImage(file);
     const imageUrl = await ref.getDownloadURL() as string;
-    const text = await this.getTextFromImage(imageUrl);
-    await ImageTextApi.deleteImageFromBucket(ref);
+    const text = await this.getTextFromImage(imageUrl, ref);
 
     ImageTextApi.setInLocalStorage(text.data);
 
@@ -55,18 +56,23 @@ export default class ImageTextApi extends NestApi {
     return text;
   }
 
-  private async getTextFromImage(imageUrl: string): Promise<ImageTextResponse> {
-    return this.post({ image: imageUrl });
+  private async getTextFromImage(imageUrl: string, ref?: Reference): Promise<ImageTextResponse> {
+    return this.post({ image: imageUrl })
+      .finally(async () => {
+        if (ref) {
+          await ImageTextApi.deleteImageFromBucket(ref);
+        }
+      });
   }
 
-  private static async uploadImage(file: File): Promise<firebase.storage.Reference> {
+  private static async uploadImage(file: File): Promise<Reference> {
     const ref = firebase.storage().ref(`textImages/${file.name}`);
 
     const snapshot = await ref.put(file);
     return snapshot.ref;
   }
 
-  private static async deleteImageFromBucket(ref: firebase.storage.Reference): Promise<void> {
+  private static async deleteImageFromBucket(ref: Reference): Promise<void> {
     await ref.delete();
   }
 

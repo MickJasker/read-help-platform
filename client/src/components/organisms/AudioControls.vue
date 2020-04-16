@@ -81,7 +81,6 @@ section {
   bottom: 0;
   display: flex;
   justify-content: center;
-  position: fixed;
   left: 0;
   padding: 4rem;
   background: #242582;

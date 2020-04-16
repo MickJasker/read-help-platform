@@ -1,0 +1,42 @@
+name: Node CI deploy pipeline
+
+on:
+  push:
+    branches:
+      - 'develop'
+
+jobs:
+  firebase_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 8
+      - name: Install server dependencies
+        run: yarn
+        working-directory: server
+      - name: Build server for production
+        run: yarn build
+        working-directory: server
+      - name: Install client dependencies
+        run: yarn
+        working-directory: client
+      - name: Build client for production
+        run: yarn build --modern
+        working-directory: client
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy
+    env:
+      CI: true
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      VUE_APP_API_KEY: ${{ secrets.VUE_APP_API_KEY }}
+      VUE_APP_AUTH_DOMAIN: ${{ secrets.VUE_APP_AUTH_DOMAIN }}
+      VUE_APP_DATABASE_URL: ${{ secrets.VUE_APP_DATABASE_URL }}
+      VUE_APP_PROJECT_ID: ${{ secrets.VUE_APP_PROJECT_ID }}
+      VUE_APP_STORAGE_BUCKET: ${{ secrets.VUE_APP_STORAGE_BUCKET }}
+      VUE_APP_MESSAGE_SENDER_ID: ${{ secrets.VUE_APP_MESSAGE_SENDER_ID }}
+      VUE_APP_MEASURE_ID: ${{ secrets.VUE_APP_MEASURE_ID }}
+      VUE_APP_APP_ID: ${{ secrets.VUE_APP_APP_ID }}
+      FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}

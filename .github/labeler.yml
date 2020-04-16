@@ -1,0 +1,9 @@
+frontend:
+  - client/**/*
+backend:
+  - server/**/*
+repo:
+  - .github/**/*
+  - ./*
+automerge:
+  - ./**/*

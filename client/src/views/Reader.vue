@@ -1,8 +1,13 @@
 <template>
   <section class="reader">
     <main>
-      <HelpButton @help="askForHelp" />
-      <TextContainer>{{ text }}</TextContainer>
+      <HelpButton
+        class="share"
+        @help="askForHelp"
+      />
+      <TextContainer class="text-container">
+        {{ text }}
+      </TextContainer>
       <AudioPlayer
         v-if="audioSource"
         ref="audioPlayer"
@@ -150,7 +155,18 @@ export default class Reader extends Vue {
     main {
       flex-basis: 100%;
       overflow: auto;
+      position: relative;
       padding-bottom: 2rem;
+
+      .text-container {
+        padding-top: 5rem;
+      }
+
+      .share {
+        position: absolute;
+        right: 5rem;
+        bottom: 0;
+      }
     }
   }
 </style>

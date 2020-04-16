@@ -1,25 +1,26 @@
 <template>
-  <div class="reader">
-    <HelpButton @help="askForHelp" />
-    <TextContainer>{{ text }}</TextContainer>
-    <AudioPlayer
-      v-if="audioSource"
-      ref="audioPlayer"
-      :src="audioSource"
-      @ended="handleEnded"
-    />
-    <p v-if="error">
-      {{ error }}
-    </p>
-    <AudioControls
-      ref="audioControls"
-      :loading="loading"
-      @play="handlePlay"
-      @pause="handlePause"
-      @forward="handleForward"
-      @backward="handleBackward"
-    />
-  </div>
+  <section class="reader">
+    <main>
+      <HelpButton @help="askForHelp" />
+      <TextContainer>{{ text }}</TextContainer>
+      <AudioPlayer
+        v-if="audioSource"
+        ref="audioPlayer"
+        :src="audioSource"
+        @ended="handleEnded"
+      />
+    </main>
+    <footer>
+      <AudioControls
+        ref="audioControls"
+        :loading="loading"
+        @play="handlePlay"
+        @pause="handlePause"
+        @forward="handleForward"
+        @backward="handleBackward"
+      />
+    </footer>
+  </section>
 </template>
 
 <script lang="ts">
@@ -140,5 +141,16 @@ export default class Reader extends Vue {
 
 
 <style scoped lang="scss">
+  .reader {
+    height: 100vh;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
 
+    main {
+      flex-basis: 100%;
+      overflow: auto;
+      padding-bottom: 2rem;
+    }
+  }
 </style>
